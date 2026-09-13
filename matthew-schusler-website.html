@@ -1,0 +1,630 @@
+<title>Matthew Schusler</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#EAEDE3;
+    --bg-raise:#DEE3D3;
+    --ink:#16241C;
+    --ink-dim:#4A5A4B;
+    --felt:#2F5D46;
+    --felt-strong:#1E4433;
+    --gold:#B8863A;
+    --gold-strong:#946B2C;
+    --scoreboard:#8A3A2C;
+    --line:#B9C0AA;
+    --card-bg:#F4F5EE;
+    --shadow:rgba(22,36,28,0.14);
+    --focus:#8A3A2C;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#101710;
+      --bg-raise:#182018;
+      --ink:#E9EDE1;
+      --ink-dim:#A8B4A2;
+      --felt:#5AA07C;
+      --felt-strong:#7CC49C;
+      --gold:#D8AE5C;
+      --gold-strong:#E9C57F;
+      --scoreboard:#E08066;
+      --line:#2C3A2B;
+      --card-bg:#161F16;
+      --shadow:rgba(0,0,0,0.5);
+      --focus:#E08066;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101710;
+    --bg-raise:#182018;
+    --ink:#E9EDE1;
+    --ink-dim:#A8B4A2;
+    --felt:#5AA07C;
+    --felt-strong:#7CC49C;
+    --gold:#D8AE5C;
+    --gold-strong:#E9C57F;
+    --scoreboard:#E08066;
+    --line:#2C3A2B;
+    --card-bg:#161F16;
+    --shadow:rgba(0,0,0,0.5);
+    --focus:#E08066;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:1080px;margin:0 auto;padding-inline:24px;}
+
+  h1,h2,h3{font-family:"Big Shoulders Display", "Arial Narrow", sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:0.01em; text-wrap:balance; margin:0;}
+  .mono{font-family:"IBM Plex Mono", ui-monospace, monospace;}
+  a{color:inherit;}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+
+  ::selection{background:var(--gold); color:var(--felt-strong);}
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:4px;}
+
+  /* ---------- NAV ---------- */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav-inner{
+    max-width:1080px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{
+    font-family:"Big Shoulders Display", sans-serif; font-weight:800;
+    font-size:1.15rem; letter-spacing:0.03em; text-decoration:none; white-space:nowrap;
+  }
+  .brand .dot{color:var(--scoreboard);}
+  .navlinks{display:flex; gap:4px; flex-wrap:wrap; list-style:none; margin:0; padding:0;}
+  .navlinks a{
+    display:inline-block; text-decoration:none; font-family:"IBM Plex Mono",monospace;
+    font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+    padding:8px 10px; border-radius:6px; color:var(--ink-dim);
+    border:1px solid transparent;
+    transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .navlinks a:hover{color:var(--ink); border-color:var(--line);}
+  .navlinks a.active{color:var(--felt-strong); border-color:var(--felt); background:color-mix(in srgb, var(--felt) 12%, transparent);}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding-block:76px; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:0.75rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--felt-strong); margin:0 0 10px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:22px; height:2px; background:var(--gold); display:inline-block;}
+  .section-title{font-size:clamp(1.8rem, 4vw, 2.6rem); margin-bottom:8px;}
+  .section-sub{color:var(--ink-dim); max-width:60ch; margin:0 0 40px;}
+
+  .reveal{opacity:1; transform:none; transition:opacity .5s ease, transform .5s ease;}
+  @media (prefers-reduced-motion: no-preference){
+    .reveal[data-hidden="true"]{opacity:0; transform:translateY(16px);}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-block:88px 56px; border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(circle at 85% 8%, color-mix(in srgb, var(--felt) 16%, transparent), transparent 55%),
+      var(--bg);
+  }
+  .hero-tag{
+    font-family:"IBM Plex Mono", monospace; font-size:0.8rem; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--scoreboard); margin:0 0 18px;
+  }
+  .hero h1{font-size:clamp(2.6rem, 9vw, 5.4rem); line-height:0.98; margin-bottom:18px;}
+  .hero h1 .accent{color:var(--felt-strong);}
+  .hero-sub{font-size:clamp(1.05rem, 2vw, 1.3rem); max-width:52ch; color:var(--ink-dim); margin:0 0 30px;}
+
+  .ticker{
+    border:1px solid var(--line); border-radius:10px; background:var(--card-bg);
+    overflow:hidden; margin-bottom:36px;
+  }
+  .ticker-track{
+    display:flex; gap:28px; white-space:nowrap; padding:11px 18px;
+    font-family:"IBM Plex Mono",monospace; font-size:0.78rem; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--ink-dim);
+    animation:ticker 26s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .ticker-track{animation:none;} }
+  .ticker-track span{color:var(--felt-strong);}
+  @keyframes ticker{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  .quicklinks{display:flex; gap:10px; flex-wrap:wrap;}
+  .pill{
+    font-family:"IBM Plex Mono",monospace; font-size:0.78rem; letter-spacing:0.06em;
+    text-transform:uppercase; text-decoration:none; padding:10px 18px; border-radius:999px;
+    border:1.5px solid var(--felt); color:var(--felt-strong); background:transparent;
+    transition:transform .15s ease, background .15s ease, color .15s ease;
+    display:inline-block;
+  }
+  .pill:hover{background:var(--felt); color:#F4F5EE; transform:translateY(-2px);}
+  .pill.gold{border-color:var(--gold); color:var(--gold-strong);}
+  .pill.gold:hover{background:var(--gold); color:#20170A;}
+
+  /* ---------- PROFESSIONAL / LEDGER ---------- */
+  .ledger{list-style:none; margin:0; padding:0; border-top:1px solid var(--line);}
+  .ledger-row{
+    display:grid; grid-template-columns:110px 1fr; gap:22px;
+    padding:22px 0; border-bottom:1px solid var(--line); position:relative;
+  }
+  .ledger-row .dur{
+    font-family:"IBM Plex Mono",monospace; font-size:0.82rem; color:var(--felt-strong);
+    padding-top:3px;
+  }
+  .ledger-row .dur .tag{
+    display:inline-block; margin-top:8px; font-size:0.68rem; letter-spacing:0.08em;
+    padding:3px 8px; border-radius:5px; background:color-mix(in srgb, var(--gold) 18%, transparent);
+    color:var(--gold-strong);
+  }
+  .ledger-row h3{font-size:1.15rem; margin-bottom:4px; letter-spacing:0.005em;}
+  .ledger-row .org{font-family:"IBM Plex Mono",monospace; font-size:0.78rem; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px; display:block;}
+  .ledger-row p{margin:0; color:var(--ink-dim); max-width:62ch;}
+  @media (max-width:640px){ .ledger-row{grid-template-columns:1fr;} }
+
+  .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:44px;}
+  .tag{
+    font-family:"IBM Plex Mono",monospace; font-size:0.74rem; letter-spacing:0.03em;
+    padding:7px 12px; border-radius:6px; border:1px solid var(--line); color:var(--ink-dim);
+    background:var(--card-bg);
+  }
+
+  /* ---------- PERSONAL ---------- */
+  .personal-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:48px; align-items:start;}
+  @media (max-width:760px){ .personal-grid{grid-template-columns:1fr;} }
+  .personal-grid p{margin:0 0 18px; max-width:62ch;}
+  .side-card{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:14px;
+    padding:26px; position:sticky; top:96px;
+  }
+  .side-card h3.eyebrow-title{font-family:"IBM Plex Mono",monospace; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--felt-strong); margin-bottom:16px; font-weight:600;}
+  .chipstack{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .chipstack li{
+    display:flex; align-items:center; gap:10px; font-family:"IBM Plex Mono",monospace; font-size:0.86rem;
+    padding:9px 12px; border-radius:8px; background:var(--bg); border:1px solid var(--line);
+  }
+  .chipstack li::before{content:""; width:9px; height:9px; border-radius:50%; background:var(--gold); flex:none;}
+  .locline{margin-top:18px; padding-top:16px; border-top:1px dashed var(--line); font-family:"IBM Plex Mono",monospace; font-size:0.78rem; color:var(--ink-dim);}
+
+  /* ---------- PROJECTS ---------- */
+  .projgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:860px){ .projgrid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .projgrid{grid-template-columns:1fr;} }
+  .projcard{
+    position:relative; border:1px solid var(--line); border-radius:14px; background:var(--card-bg);
+    padding:22px; overflow:hidden; text-decoration:none; color:inherit; display:block;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .projcard:hover{transform:translateY(-4px); box-shadow:0 14px 30px var(--shadow); border-color:var(--felt);}
+  .projcard .pnum{font-family:"IBM Plex Mono",monospace; font-size:0.72rem; color:var(--gold-strong); letter-spacing:0.08em;}
+  .projcard h3{font-size:1.25rem; margin:10px 0 8px;}
+  .projcard .pdesc{font-size:0.9rem; color:var(--ink-dim); margin:0;}
+  .projcard .cta{
+    margin-top:16px; font-family:"IBM Plex Mono",monospace; font-size:0.74rem; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--felt-strong); opacity:0; transform:translateX(-6px);
+    transition:opacity .18s ease, transform .18s ease;
+  }
+  .projcard:hover .cta{opacity:1; transform:translateX(0);}
+  .placeholder-badge{
+    position:absolute; top:16px; right:16px; font-family:"IBM Plex Mono",monospace; font-size:0.62rem;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-dim); border:1px dashed var(--line);
+    border-radius:5px; padding:3px 7px;
+  }
+
+  /* ---------- PHILLY ---------- */
+  .philly{
+    background:
+      linear-gradient(var(--bg-raise), var(--bg-raise)) padding-box,
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--line) 60%, transparent) 0 1px, transparent 1px 46px);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .legend{
+    display:flex; gap:18px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-size:0.76rem;
+    color:var(--ink-dim); margin-bottom:40px; border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; background:var(--card-bg); width:fit-content;
+  }
+  .legend b{color:var(--ink);}
+
+  .stops{list-style:none; margin:0 0 56px; padding:0; position:relative;}
+  .stops::before{
+    content:""; position:absolute; left:17px; top:8px; bottom:8px; width:2px;
+    background:repeating-linear-gradient(var(--felt) 0 8px, transparent 8px 14px);
+  }
+  .stop{position:relative; padding-left:52px; margin-bottom:30px;}
+  .stop:last-child{margin-bottom:0;}
+  .stop .stopnum{
+    position:absolute; left:0; top:0; width:36px; height:36px; border-radius:50%;
+    background:var(--felt); color:#F4F5EE; display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:0.9rem; border:3px solid var(--bg-raise);
+  }
+  .stop h3{font-size:1.2rem; margin-bottom:4px;}
+  .stop .vibe{font-family:"IBM Plex Mono",monospace; font-size:0.76rem; color:var(--ink-dim); margin-bottom:8px; display:block;}
+  .stop .spots{margin:0; color:var(--ink-dim); font-size:0.94rem;}
+  .stop .spots b{color:var(--ink); font-weight:600;}
+
+  .fooddrink{margin-bottom:56px;}
+  .foodlist{
+    display:flex; flex-wrap:wrap; gap:9px; list-style:none; margin:0; padding:0;
+  }
+  .foodlist li{
+    font-family:"IBM Plex Mono",monospace; font-size:0.8rem; padding:6px 11px; border-radius:6px;
+    background:var(--card-bg); border:1px solid var(--line); color:var(--ink-dim);
+  }
+
+  .leaderboard{width:100%; border-collapse:collapse; margin-bottom:56px; font-size:0.92rem;}
+  .leaderboard caption{text-align:left; margin-bottom:14px;}
+  .leaderboard th{
+    font-family:"IBM Plex Mono",monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-dim); text-align:left; padding:0 10px 10px; border-bottom:1px solid var(--line);
+  }
+  .leaderboard td{padding:12px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .leaderboard .rank{font-family:"IBM Plex Mono",monospace; color:var(--gold-strong); font-variant-numeric:tabular-nums;}
+  .leaderboard .price{font-family:"IBM Plex Mono",monospace; color:var(--felt-strong); white-space:nowrap;}
+  .leaderboard .stars{font-family:"IBM Plex Mono",monospace; white-space:nowrap; letter-spacing:1px;}
+  .leaderboard .note{color:var(--ink-dim); font-size:0.86rem;}
+  .table-scroll{overflow-x:auto;}
+
+  .placeholder-block{
+    border:1.5px dashed var(--line); border-radius:12px; padding:26px; color:var(--ink-dim);
+    font-family:"IBM Plex Mono",monospace; font-size:0.85rem; background:color-mix(in srgb, var(--card-bg) 60%, transparent);
+  }
+  .placeholder-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:640px){ .placeholder-grid{grid-template-columns:1fr;} }
+  .placeholder-block .ph-title{color:var(--ink); text-transform:uppercase; letter-spacing:0.08em; font-size:0.72rem; margin-bottom:10px; display:block;}
+
+  /* ---------- CONNECT ---------- */
+  .connect-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .iconbtn{
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    border:1px solid var(--line); border-radius:12px; padding:14px 18px; background:var(--card-bg);
+    transition:transform .15s ease, border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .iconbtn svg{width:20px; height:20px; flex:none;}
+  .iconbtn span{font-family:"IBM Plex Mono",monospace; font-size:0.82rem; letter-spacing:0.03em;}
+  .iconbtn:hover{transform:translateY(-3px) scale(1.03); border-color:var(--felt); color:var(--felt-strong); background:color-mix(in srgb, var(--felt) 10%, var(--card-bg));}
+
+  footer{padding:36px 0 60px; text-align:center; font-family:"IBM Plex Mono",monospace; font-size:0.76rem; color:var(--ink-dim);}
+</style>
+
+<nav class="topnav" aria-label="Section navigation">
+  <div class="topnav-inner">
+    <a class="brand" href="#top">MATT<span class="dot">.</span>SCHUSLER</a>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#professional" data-section="professional">Professional</a></li>
+      <li><a href="#personal" data-section="personal">Personal</a></li>
+      <li><a href="#projects" data-section="projects">Projects</a></li>
+      <li><a href="#philly" data-section="philly">Philly</a></li>
+      <li><a href="#connect" data-section="connect">Connect</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="hero-tag mono">Philadelphia, PA · Business Development</p>
+    <h1>MATTHEW<br><span class="accent">SCHUSLER</span></h1>
+    <p class="hero-sub">Finance brain, sales instincts, and an unreasonable amount of opinions about data, poker odds, and where to eat in Philly.</p>
+
+    <div class="ticker" role="presentation">
+      <div class="ticker-track" aria-hidden="true">
+        <span>PHILADELPHIA</span> · DAILY FANTASY SPORTS · <span>POKER</span> · CHESS · READING · COOKING · <span>MOVIES</span> · PHILADELPHIA · DAILY FANTASY SPORTS · <span>POKER</span> · CHESS · READING · COOKING · <span>MOVIES</span>
+      </div>
+    </div>
+
+    <div class="quicklinks">
+      <a class="pill" href="#professional">The Career Ledger</a>
+      <a class="pill" href="#personal">Off the Clock</a>
+      <a class="pill gold" href="#philly">My Philly Guide</a>
+      <a class="pill" href="#connect">Say Hi</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section id="professional">
+    <div class="wrap">
+      <p class="eyebrow">01 — Professional</p>
+      <h2 class="section-title reveal" data-hidden="true">The Career Ledger</h2>
+      <p class="section-sub reveal" data-hidden="true">Four stops so far — finance, real estate, and now full-time relationship building.</p>
+
+      <ol class="ledger reveal" data-hidden="true">
+        <li class="ledger-row">
+          <div class="dur">EDUCATION</div>
+          <div>
+            <span class="org">Villanova University</span>
+            <h3>Triple major, because one wasn't enough</h3>
+            <p>Finance, Economics, and Real Estate — the coursework that set up everything that came after.</p>
+          </div>
+        </li>
+        <li class="ledger-row">
+          <div class="dur">1.5 YRS <span class="tag">CMBS</span></div>
+          <div>
+            <span class="org">KBRA</span>
+            <h3>Rating a portfolio worth billions</h3>
+            <p>Managed a portfolio of multibillion-dollar CMBS loans, monitored property financial performance, and produced monthly reports for clients.</p>
+          </div>
+        </li>
+        <li class="ledger-row">
+          <div class="dur">4 YRS <span class="tag">R.E.</span></div>
+          <div>
+            <span class="org">College Towne Communities</span>
+            <h3>Student housing, from deal to dirt</h3>
+            <p>Analyzed acquisitions and divestitures, ran development projects, and led market analysis for a student housing developer.</p>
+          </div>
+        </li>
+        <li class="ledger-row">
+          <div class="dur"><span class="tag">CURRENT</span></div>
+          <div>
+            <span class="org">East Coast Warehouse &amp; Distribution</span>
+            <h3>Business Development Associate</h3>
+            <p>Turned out I had a real propensity for sales and relationships — now building skills in prospecting, cold outreach, and CRM management.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="tags reveal" data-hidden="true" aria-label="Skills">
+        <span class="tag">Finance</span>
+        <span class="tag">Real Estate Analysis</span>
+        <span class="tag">CMBS / Portfolio Monitoring</span>
+        <span class="tag">Business Development</span>
+        <span class="tag">Cold Outreach</span>
+        <span class="tag">CRM Management</span>
+        <span class="tag">Market Analysis</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="personal">
+    <div class="wrap">
+      <p class="eyebrow">02 — Personal</p>
+      <h2 class="section-title reveal" data-hidden="true">Off the Clock</h2>
+      <p class="section-sub reveal" data-hidden="true">What I actually think about, and what I do with my evenings.</p>
+
+      <div class="personal-grid">
+        <div class="reveal" data-hidden="true">
+          <p>I believe in the AI era, the world belongs to people who are curious, passionate learners — there are no more excuses to not be technically proficient. Life and work are changing at an exponential pace, and everyone needs to be able to sell, build relationships, and strive for daily self-improvement, or get left behind.</p>
+          <p>Those closest to me would describe me as data-driven, curious, a good listener, and a sports junkie. I'm a huge proponent of data and statistics — I think data is the most valuable commodity in the world. With it, you can explain any story, understand significance, and identify advantageous situations. I play daily fantasy sports, poker, and chess.</p>
+          <p>I'm currently based in Philadelphia. In my free time I like to exercise, cook, read, and watch movies.</p>
+        </div>
+        <aside class="side-card reveal" data-hidden="true">
+          <h3 class="eyebrow-title">Currently into</h3>
+          <ul class="chipstack">
+            <li>Daily Fantasy Sports</li>
+            <li>Poker</li>
+            <li>Chess</li>
+            <li>Reading</li>
+            <li>Cooking</li>
+            <li>Movies</li>
+          </ul>
+          <p class="locline">📍 Based in Philadelphia, PA</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <p class="eyebrow">03 — Projects</p>
+      <h2 class="section-title reveal" data-hidden="true">Side Builds</h2>
+      <p class="section-sub reveal" data-hidden="true">A running list of things I've built or mapped out. Full write-ups landing soon.</p>
+
+      <div class="projgrid reveal" data-hidden="true">
+        <a class="projcard" href="#" aria-label="Penn Sporting Club — details coming soon">
+          <span class="placeholder-badge">Add details</span>
+          <span class="pnum mono">PRJ.01</span>
+          <h3>Penn Sporting Club</h3>
+          <p class="pdesc">Description coming soon.</p>
+          <span class="cta">View project →</span>
+        </a>
+        <a class="projcard" href="#" aria-label="Sportscyclo — details coming soon">
+          <span class="placeholder-badge">Add details</span>
+          <span class="pnum mono">PRJ.02</span>
+          <h3>Sportscyclo</h3>
+          <p class="pdesc">Description coming soon.</p>
+          <span class="cta">View project →</span>
+        </a>
+        <a class="projcard" href="#" aria-label="Airport Map — details coming soon">
+          <span class="placeholder-badge">Add details</span>
+          <span class="pnum mono">PRJ.03</span>
+          <h3>Airport Map</h3>
+          <p class="pdesc">Description coming soon.</p>
+          <span class="cta">View project →</span>
+        </a>
+        <a class="projcard" href="#" aria-label="Hotel Map — details coming soon">
+          <span class="placeholder-badge">Add details</span>
+          <span class="pnum mono">PRJ.04</span>
+          <h3>Hotel Map</h3>
+          <p class="pdesc">Description coming soon.</p>
+          <span class="cta">View project →</span>
+        </a>
+        <a class="projcard" href="#" aria-label="College Map — details coming soon">
+          <span class="placeholder-badge">Add details</span>
+          <span class="pnum mono">PRJ.05</span>
+          <h3>College Map</h3>
+          <p class="pdesc">Description coming soon.</p>
+          <span class="cta">View project →</span>
+        </a>
+        <a class="projcard" href="#" aria-label="Travel Map — details coming soon">
+          <span class="placeholder-badge">Add details</span>
+          <span class="pnum mono">PRJ.06</span>
+          <h3>Travel Map</h3>
+          <p class="pdesc">Description coming soon.</p>
+          <span class="cta">View project →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="philly" class="philly">
+    <div class="wrap">
+      <p class="eyebrow">04 — Philly</p>
+      <h2 class="section-title reveal" data-hidden="true">A Local's Guide to Philadelphia</h2>
+      <p class="section-sub reveal" data-hidden="true">Not a listicle — this is my actual rotation. Five neighborhoods, the city-wide favorites, and where to stay if you're visiting.</p>
+
+      <div class="legend reveal" data-hidden="true" aria-label="Price legend">
+        <span><b>$</b> under $20/person</span>
+        <span><b>$$</b> $20–50</span>
+        <span><b>$$$</b> $50–100</span>
+        <span><b>$$$$</b> over $100</span>
+      </div>
+
+      <ol class="stops reveal" data-hidden="true">
+        <li class="stop">
+          <span class="stopnum">1</span>
+          <h3>Queen Village</h3>
+          <span class="vibe">Accessible · near Bella Vista, Old City, and the Delaware</span>
+          <p class="spots">Standouts: <b>Royal Tavern</b>, <b>Grace and Proper</b>, <b>Scampi</b>, <b>Herman's Shot Tower</b>.</p>
+        </li>
+        <li class="stop">
+          <span class="stopnum">2</span>
+          <h3>Fitler Square</h3>
+          <span class="vibe">Close to 30th Street Station, the Schuylkill River Trail, Rittenhouse, and the museums</span>
+          <p class="spots">Standouts: <b>Illata</b>, <b>Pine St. Grill</b>, <b>Trattoria Carina</b>, <b>Mr. Rabbit</b>, <b>Rowhome</b>.</p>
+        </li>
+        <li class="stop">
+          <span class="stopnum">3</span>
+          <h3>Rittenhouse</h3>
+          <span class="vibe">Expensive, city-central, great food, multiple transit options</span>
+          <p class="spots">Standouts: <b>Parc</b>, <b>Dandelion</b>, <b>Dizengoff</b>, <b>ABar</b>, <b>Elixr</b>.</p>
+        </li>
+        <li class="stop">
+          <span class="stopnum">4</span>
+          <h3>Passyunk</h3>
+          <span class="vibe">Old-school South Philly · great food · on the Broad Street Line</span>
+          <p class="spots">Standouts: <b>Second District Brewing</b> (Comfort Food Sundays), <b>Bomb Bomb</b>, <b>Bok Bar</b>, <b>Artisan Boulanger</b>, <b>Fountain Porter</b>.</p>
+        </li>
+        <li class="stop">
+          <span class="stopnum">5</span>
+          <h3>Fishtown</h3>
+          <span class="vibe">Unique, hipster, great food, on the Market-Frankford Line — a bit disconnected from the rest of the city</span>
+          <p class="spots">Standouts: <b>Kalaya</b>, <b>Suraya</b>, <b>Laser Wolf</b>, <b>Gilda</b>, <b>Clubhouse</b>.</p>
+        </li>
+      </ol>
+
+      <div class="fooddrink reveal" data-hidden="true">
+        <h3 style="font-size:1.15rem; margin-bottom:14px;">City-Wide Favorites</h3>
+        <ul class="foodlist">
+          <li>Angelo's</li><li>Antonio's</li><li>Beddia</li><li>Dolores</li><li>Del Rossi's</li><li>DiNic's</li>
+          <li>JRP</li><li>Ricci's</li><li>Lil Nick's</li><li>Paesano's</li><li>Termini Bros.</li><li>Isgro Pastries</li>
+          <li>John's Roast Pork</li><li>1900 Ice Cream</li><li>Mike's BBQ</li><li>Pho 75</li><li>Ba Le</li><li>Pizzata</li>
+          <li>Lucky's</li><li>Sidecar</li><li>McGillin's</li><li>Locust Rendezvous</li><li>Herschel's</li><li>Zorba's</li>
+          <li>Black Taxi</li><li>3Js</li><li>Frankford Hall</li>
+        </ul>
+      </div>
+
+      <div class="table-scroll reveal" data-hidden="true">
+        <table class="leaderboard">
+          <caption style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);">Hotel Leaderboard</caption>
+          <thead>
+            <tr><th scope="col">Rank</th><th scope="col">Hotel</th><th scope="col">Price</th><th scope="col">Rating</th><th scope="col">Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="rank mono">01</td><td>Four Seasons</td><td class="price">$$$$</td><td class="stars mono">★★★★★</td><td class="note">The only true 5-star in the city; the bar/restaurant at the top has one of the best views in Philly.</td></tr>
+            <tr><td class="rank mono">02</td><td>The Rittenhouse</td><td class="price">$$$$</td><td class="stars mono">★★★★★</td><td class="note">Old money feel, right off Rittenhouse Square, elite cocktail bar.</td></tr>
+            <tr><td class="rank mono">03</td><td>Bellevue</td><td class="price">$$$</td><td class="stars mono">★★★★½</td><td class="note">Best hotel gym in the city, right on Broad Street, centrally located.</td></tr>
+            <tr><td class="rank mono">04</td><td>The Logan</td><td class="price">$$$</td><td class="stars mono">★★★★½</td><td class="note">Former Four Seasons property; great hotel, location isn't as strong.</td></tr>
+            <tr><td class="rank mono">05</td><td>Loews</td><td class="price">$$$</td><td class="stars mono">★★★★</td><td class="note">Right in Center City, close to Reading Terminal Market.</td></tr>
+            <tr><td class="rank mono">06</td><td>Sofitel</td><td class="price">$$$</td><td class="stars mono">★★★★</td><td class="note">Right in Rittenhouse, a block off the square.</td></tr>
+            <tr><td class="rank mono">07</td><td>The Ritz-Carlton</td><td class="price">$$$</td><td class="stars mono">★★★★</td><td class="note">Right on Broad St., cool lobby, but a below-average Ritz experience.</td></tr>
+            <tr><td class="rank mono">08</td><td>The Notary</td><td class="price">$$</td><td class="stars mono">★★★★</td><td class="note">Right in Center City, close to Reading Terminal Market, cool historic building.</td></tr>
+            <tr><td class="rank mono">09</td><td>Kimpton Hotel Monaco</td><td class="price">$$</td><td class="stars mono">★★★★</td><td class="note">Well-located in Old City, rooftop bar.</td></tr>
+            <tr><td class="rank mono">10</td><td>Kimpton Palomar</td><td class="price">$$</td><td class="stars mono">★★★★</td><td class="note">Right in Rittenhouse, a block off the square.</td></tr>
+            <tr><td class="rank mono">11</td><td>Canopy</td><td class="price">$$</td><td class="stars mono">★★★½</td><td class="note">Right in Center City, close to Reading Terminal Market.</td></tr>
+            <tr><td class="rank mono">12</td><td>Hyatt Centric</td><td class="price">$$</td><td class="stars mono">★★★½</td><td class="note">Right in Rittenhouse, a block off the square.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="placeholder-grid reveal" data-hidden="true" style="margin-top:44px;">
+        <div class="placeholder-block">
+          <span class="ph-title">To Do — awaiting entries</span>
+          This list is empty for now. Drop in your favorite activities and spots and they'll show up here.
+        </div>
+        <div class="placeholder-block">
+          <span class="ph-title">Top 25 — awaiting entries</span>
+          Your numbered top-25 (restaurants, bars, parks, whatever mix you want) goes here once you send it over.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="connect">
+    <div class="wrap">
+      <p class="eyebrow">05 — Connect</p>
+      <h2 class="section-title reveal" data-hidden="true">Find Me Elsewhere</h2>
+      <p class="section-sub reveal" data-hidden="true">Email's the fastest way to reach me. Everything else is where I actually spend my time.</p>
+
+      <div class="connect-row reveal" data-hidden="true">
+        <a class="iconbtn" href="mailto:mschusler28@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="M3 6l9 7 9-7"/></svg>
+          <span>Email</span>
+        </a>
+        <a class="iconbtn" href="https://www.linkedin.com/in/matthew-s-821233117/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.6 4.1 5.5 3 5.5S1 4.6 1 3.5 1.9 1.5 3 1.5s1.98.9 1.98 2zM1.5 8.25h3v13H1.5v-13zM8.5 8.25h2.87v1.78h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v7.18h-3v-6.37c0-1.52-.03-3.47-2.12-3.47-2.12 0-2.44 1.66-2.44 3.37v6.47h-3v-13z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <a class="iconbtn" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 5.4A18 18 0 0 0 15.9 4c-.2.4-.5.9-.6 1.3a16.6 16.6 0 0 0-6.6 0c-.2-.4-.4-.9-.6-1.3A18 18 0 0 0 3.7 5.4C1.3 9 0.6 12.5 1 16a18.3 18.3 0 0 0 4.7 2.3c.4-.5.7-1 1-1.6-.6-.2-1.1-.5-1.6-.8.1-.1.3-.2.4-.3a12.9 12.9 0 0 0 10.9 0c.1.1.3.2.4.3-.5.3-1 .6-1.6.8.3.6.6 1.1 1 1.6A18.3 18.3 0 0 0 23 16c.5-4-.5-7.5-2.7-10.6zM8.7 13.8c-.8 0-1.4-.7-1.4-1.6s.6-1.6 1.4-1.6 1.4.7 1.4 1.6-.6 1.6-1.4 1.6zm6.6 0c-.8 0-1.4-.7-1.4-1.6s.6-1.6 1.4-1.6 1.4.7 1.4 1.6-.6 1.6-1.4 1.6z"/></svg>
+          <span>Discord (soon)</span>
+        </a>
+        <a class="iconbtn" href="https://www.strava.com/athletes/102044511" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.2 2 6 15h4.6l2.6-5 2.6 5h4.6L13.2 2zm1.8 15.6-1.8 3.4-1.8-3.4H8l3.2 6.4h4l3.2-6.4h-3.4z"/></svg>
+          <span>Strava</span>
+        </a>
+        <a class="iconbtn" href="https://www.goodreads.com/user/show/38729538-matthew-schusler" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm.4 4.2c2.5 0 4.3 1.9 4.3 4.4v6.9h-1.7v-1c-.6.8-1.6 1.3-2.8 1.3-2.4 0-4.1-1.9-4.1-4.5v-.1c0-2.6 1.7-4.5 4-4.5 1.1 0 2 .4 2.6 1.1V6.5h-2.3zm.1 3c-1.4 0-2.4 1.2-2.4 2.9v.1c0 1.7 1 2.9 2.4 2.9s2.4-1.2 2.4-2.9v-.1c0-1.7-1-2.9-2.4-2.9z"/></svg>
+          <span>Goodreads</span>
+        </a>
+        <a class="iconbtn" href="https://letterboxd.com/mjawn/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6.5" cy="12" r="4.5"/><circle cx="17.5" cy="12" r="4.5" fill-opacity="0.55"/><circle cx="12" cy="12" r="4.5" fill-opacity="0.8"/></svg>
+          <span>Letterboxd</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">Built one section at a time, like a good career ledger. © <span id="year"></span> Matthew Schusler.</div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // scrollspy
+  const sections = ['professional','personal','projects','philly','connect'].map(id => document.getElementById(id));
+  const links = Array.from(document.querySelectorAll('#navlinks a'));
+  const setActive = (id) => {
+    links.forEach(l => l.classList.toggle('active', l.dataset.section === id));
+  };
+  if ('IntersectionObserver' in window){
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(s => s && spy.observe(s));
+
+    const reveals = document.querySelectorAll('.reveal[data-hidden="true"]');
+    const ro = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting){ e.target.setAttribute('data-hidden','false'); ro.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => ro.observe(el));
+  }
+</script>
